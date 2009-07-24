@@ -1,0 +1,26 @@
+# Pickle
+
+A BDD Javascript Library that allows you create behavior style features that execute step definitions to develop and test your javascript in a BDD Style.
+
+    var MyFeature = {
+      MyScenario: function () {
+        Given("I should see Hello");
+        And("I should see BiteMe");
+        When("I fill in Name with Tom");
+        Then("I press Save");
+        And("I should see Everything");
+        And("I have a million dollars");
+
+      }
+    }
+
+    var HaveAMillion = {
+      instruction: /^I have a million dollars$/,
+      test: function () {
+        return true;
+      }
+    }
+
+    Steps[Steps.length] = HaveAMillion;
+    
+
