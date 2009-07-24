@@ -1,4 +1,4 @@
-# Pickle
+# Pickle 0.0.1
 
 A BDD Javascript Library that allows you create behavior style features that execute step definitions to develop and test your javascript in a BDD Style.
 
@@ -24,3 +24,23 @@ A BDD Javascript Library that allows you create behavior style features that exe
     Steps[Steps.length] = HaveAMillion;
     
 
+## Requirements
+
+JQuery 1.3.2
+
+## Test using Sinatra 
+
+    git clone git://github.com:twilson63/pickle.git
+    
+    cd pickle
+    
+    ruby pickle.rb
+    
+    firefox http://localhost:4567
+    
+    # Open Firebug and Run 
+    MyFeature.MyScenario();
+    # In the console
+    
+    
+    
