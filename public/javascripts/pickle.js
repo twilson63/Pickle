@@ -1,5 +1,5 @@
 /*!
- * Pickle JavaScript Library v0.0.1
+ * Pickle JavaScript Library v0.0.2
  * http://pickle.jackhq.com/
  *
  * Copyright (c) 2009 Jack Russell Software Company, LLC
@@ -118,7 +118,7 @@ var LinkClick = function(arg) {
 var SetTextField = function(arg, arg2) {
   label = $('label:contains("' + arg + '")');
   if(label.length > 0) {  
-    c = $('input:[name="' + label.attr('for') + '"]');
+    c = $('input:[id=' + label.attr('for') + ']');
     if(c.length > 0 ) {
       c.val(arg2);
       return true;
