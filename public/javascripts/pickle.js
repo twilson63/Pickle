@@ -11,66 +11,21 @@
  */
 
 
-// Common Pickle Step Definitions
 
-Pickle.AddStep( {
-  instruction: /^I should see (.*)$/,
-  test: function (arg) {
-    return Pickle.Contains(arg);
-  }
-});
-
-
-Pickle.AddStep( {
-  instruction: /^I follow (.*)$/,
-  test: function (arg) {
-    return Pickle.Click(arg);
-  }
-});
-
-Pickle.AddStep(  {
-  instruction: /^I fill in (.*) with (.*)$/,
-  test: function (arg, arg2) {
-    return Pickle.SetText(arg, arg2)
-    
-  }
-  
-});
-
-Pickle.AddStep( {
-  instruction: /^I press (.*)$/,
-  test: function (arg) {
-    return Pickle.PressButton(arg);
-  }
-});
-
-Pickle.AddStep(  {
-  instruction: /^I select "([^\"]*)" from "([^\"]*)"$/,
-  test: function (arg, arg2) {
-    return Pickle.Select(arg, arg2);
-  }
-});
-
-Pickle.AddStep(  {
-  instruction: /^I check "([^\"]*)"$/,
-  test: function (arg) {
-    return Pickle.Check(arg);
-  }
-});
 
 // Basic Test Functions
 
 (function(){
   
-	var
-		window = this,
-		undefined,
-		_Pickle = window.Pickle,
-		Pickle = window.Pickle = function() {
-			return Goldfish.fn.init();
-		}
+  var
+    window = this,
+    undefined,
+    _Pickle = window.Pickle,
+    Pickle = window.Pickle = function() {
+      return Pickle.fn.init();
+    }
 	
-	var Steps = [];
+  var Steps = [];
 
   // Pickle Steps
 
@@ -112,7 +67,7 @@ Pickle.AddStep(  {
     }
   }
   
-	Pickle.fn = Pickle.prototype = {
+  Pickle.fn = Pickle.prototype = {
     init: function() {
       return Pickle.fn;
     },
@@ -221,12 +176,53 @@ Pickle.AddStep(  {
 
     }    
 	  
-	}
+  }
+
+});
+
+// Common Pickle Step Definitions
+
+Pickle.AddStep( {
+  instruction: /^I should see (.*)$/,
+  test: function (arg) {
+    return Pickle.Contains(arg);
+  }
+})();
+
+
+Pickle.AddStep( {
+  instruction: /^I follow (.*)$/,
+  test: function (arg) {
+    return Pickle.Click(arg);
+  }
+});
+
+Pickle.AddStep(  {
+  instruction: /^I fill in (.*) with (.*)$/,
+  test: function (arg, arg2) {
+    return Pickle.SetText(arg, arg2)
+    
+  }
   
+});
 
+Pickle.AddStep( {
+  instruction: /^I press (.*)$/,
+  test: function (arg) {
+    return Pickle.PressButton(arg);
+  }
+});
 
+Pickle.AddStep(  {
+  instruction: /^I select "([^\"]*)" from "([^\"]*)"$/,
+  test: function (arg, arg2) {
+    return Pickle.Select(arg, arg2);
+  }
+});
 
-
-
-
+Pickle.AddStep(  {
+  instruction: /^I check "([^\"]*)"$/,
+  test: function (arg) {
+    return Pickle.Check(arg);
+  }
 });
