@@ -21,10 +21,16 @@
     %p
       %label{:for => "username"} Name
       %br
-      %input{:type => "text", :name => "username"}
+      %input{:type => "text", :id => "username"}
       %br
       %input{:type => "submit", :value => "Save", :onclick => "alert('Hello World');"}
-      
+      %br
+      %label{:for => "color_list"} Colors
+      %br
+      %select{:id => "color_list"}
+        %option{:value => "Red"} Red
+        %option{:value => "Blue"} Blue
+        
     %p
       Everything
       

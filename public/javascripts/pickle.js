@@ -9,133 +9,224 @@
  * Date: 2009-07-24 14:23:21 -0500 (Fri, 24 July 2009)
  * Revision: 1
  */
-var Steps = [];
 
-// Pickle Steps
-
-var Given = When = Then = And = function (instruction) {
-  var fired = false;
-  var test = function () {
-    console.log("Test Not Defined: " + instruction);
-  }
-  /* Find Test by instruction */
-  for(i = 0; i < Steps.length; i++) {
-    a = instruction.match(Steps[i].instruction);
-    if (a != null) {
-      fired = true;
-      if (a.length == 1) {
-        if( Steps[i].test() == false) {
-          console.log("Step Failed: " + instruction);
-        } else {
-          console.log("Step Passed: " + instruction);
-        }        
-      } else if (a.length == 2) {
-        if( Steps[i].test(a[1]) == false) {
-          console.log("Step Failed: " + instruction);
-        } else {
-          console.log("Step Passed: " + instruction);
-        }
-      } else if (a.length == 3) {
-        if( Steps[i].test(a[1], a[2]) == false) {
-          console.log("Step Failed: " + instruction);
-        } else {
-          console.log("Step Passed: " + instruction);
-        }        
-      }
-      
-      break;
-    }
-  }
-  if(!fired) {
-    test();
-  }
-}
 
 // Common Pickle Step Definitions
 
-var ShouldSee = {
+Pickle.AddStep( {
   instruction: /^I should see (.*)$/,
   test: function (arg) {
-    return PageContains(arg);
+    return Pickle.Contains(arg);
   }
-}
-
-Steps[Steps.length] = ShouldSee;
+});
 
 
-var Follow = {
+Pickle.AddStep( {
   instruction: /^I follow (.*)$/,
   test: function (arg) {
-    return LinkClick(arg);
+    return Pickle.Click(arg);
   }
-}
+});
 
-Steps[Steps.length] = Follow;
-
-
-var FillIn = {
+Pickle.AddStep(  {
   instruction: /^I fill in (.*) with (.*)$/,
   test: function (arg, arg2) {
-    return SetTextField(arg, arg2)
+    return Pickle.SetText(arg, arg2)
     
   }
   
-}
+});
 
-Steps[Steps.length] = FillIn;
-
-var PressSubmitButton = {
+Pickle.AddStep( {
   instruction: /^I press (.*)$/,
   test: function (arg) {
-    return PressButton(arg);
+    return Pickle.PressButton(arg);
   }
-}
+});
 
-Steps[Steps.length] = PressSubmitButton;
+Pickle.AddStep(  {
+  instruction: /^I select "([^\"]*)" from "([^\"]*)"$/,
+  test: function (arg, arg2) {
+    return Pickle.Select(arg, arg2);
+  }
+});
 
-
-
+Pickle.AddStep(  {
+  instruction: /^I check "([^\"]*)"$/,
+  test: function (arg) {
+    return Pickle.Check(arg);
+  }
+});
 
 // Basic Test Functions
-var PageContains = function(arg) {
-  regexpression = new RegExp(arg);
-  if($("body").html().match(regexpression) == null) {
-    return false;
-  } else {
-    return true;
-  }
-}
 
-var LinkClick = function(arg) {
-  if($('a:contains("' + arg + '")').length == 0 ) {
-    return false;
-  } else {
-    $('a:contains("' + arg + '")').click();
-    return true;
-  }
-}
+(function(){
+  
+	var
+		window = this,
+		undefined,
+		_Pickle = window.Pickle,
+		Pickle = window.Pickle = function() {
+			return Goldfish.fn.init();
+		}
+	
+	var Steps = [];
 
-var SetTextField = function(arg, arg2) {
-  label = $('label:contains("' + arg + '")');
-  if(label.length > 0) {  
-    c = $('input:[id=' + label.attr('for') + ']');
-    if(c.length > 0 ) {
-      c.val(arg2);
-      return true;
-    } else {
-      return false;
+  // Pickle Steps
+
+  var Given = When = Then = And = function (instruction) {
+    var fired = false;
+    var test = function () {
+      console.log("Test Not Defined: " + instruction);
     }
-  } else {
-    return false;
-  }
-}
+    /* Find Test by instruction */
+    for(i = 0; i < Steps.length; i++) {
+      a = instruction.match(Steps[i].instruction);
+      if (a != null) {
+        fired = true;
+        if (a.length == 1) {
+          if( Steps[i].test() == false) {
+            console.log("Step Failed: " + instruction);
+          } else {
+            console.log("Step Passed: " + instruction);
+          }        
+        } else if (a.length == 2) {
+          if( Steps[i].test(a[1]) == false) {
+            console.log("Step Failed: " + instruction);
+          } else {
+            console.log("Step Passed: " + instruction);
+          }
+        } else if (a.length == 3) {
+          if( Steps[i].test(a[1], a[2]) == false) {
+            console.log("Step Failed: " + instruction);
+          } else {
+            console.log("Step Passed: " + instruction);
+          }        
+        }
 
-var PressButton = function(arg) {
-  obj = $('input:[value="' + arg + '"]');
-  if(obj.length > 0) {
-    obj.click();
-    return true;
-  } else {
-    return false;
+        break;
+      }
+    }
+    if(!fired) {
+      test();
+    }
   }
-}
+  
+	Pickle.fn = Pickle.prototype = {
+    init: function() {
+      return Pickle.fn;
+    },
+    AddStep: function (obj) {
+      Steps[Steps.length] = obj;
+    },
+    
+    Contains: function(arg) {
+      regexpression = new RegExp(arg);
+      if($("body").html().match(regexpression) == null) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    Click: function(arg) {
+      if($('a:contains("' + arg + '")').length == 0 ) {
+        return false;
+      } else {
+        $('a:contains("' + arg + '")').click();
+        return true;
+      }
+    },
+    SetText: function(arg, arg2) {
+      label = $('label:contains("' + arg + '")');
+      if(label.length > 0) {  
+        c = $('input:[id=' + label.attr('for') + ']');
+        if(c.length > 0 ) {
+          c.val(arg2);
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    },
+    PressButton: function(arg) {
+      obj = $('input:[value="' + arg + '"]');
+      if(obj.length > 0) {
+        obj.click();
+        return true;
+      } else {
+        return false;
+      }
+    },
+    Select: function(arg, arg2) {
+      label = $('label:contains("' + arg2 + '")');
+      if(label.length > 0) {  
+        c = $('select:[id=' + label.attr('for') + '] option:contains("' + arg + '")');
+        if(c.length > 0 ) {
+          c[0].selected = true;
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    },
+    Check: function(arg) {
+      label = $('label:contains("' + arg + '")');
+      if(label.length > 0) {  
+        c = $('checkbox:[id=' + label.attr('for') + ']');
+        if(c.length > 0 ) {
+          c.attr('checked','true');
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+
+    },
+
+    UnCheck: function(arg) {
+      label = $('label:contains("' + arg + '")');
+      if(label.length > 0) {  
+        c = $('checkbox:[id=' + label.attr('for') + ']');
+        if(c.length > 0 ) {
+          c.attr('checked','false');
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+
+    },
+
+    Choose: function(arg) {
+      label = $('label:contains("' + arg + '")');
+      if(label.length > 0) {  
+        c = $('radio:[id=' + label.attr('for') + ']');
+        if(c.length > 0 ) {
+          c.attr('checked','true');
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+
+    }    
+	  
+	}
+  
+
+
+
+
+
+
+});
