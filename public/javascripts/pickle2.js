@@ -1,3 +1,14 @@
+/*!
+ * Pickle JavaScript Library v0.0.3
+ * http://pickle.jackhq.com/
+ *
+ * Copyright (c) 2009 Jack Russell Software Company, LLC
+ * Licensed under the MIT licenses.
+ * http://www.jackhq.com/License
+ *
+ * Date: 2009-07-24 14:23:21 -0500 (Fri, 24 July 2009)
+ * Revision: 1
+ */
 (function(){
 
   var
@@ -127,3 +138,51 @@
   }
 
 })();
+
+// Common Pickle Step Definitions
+
+Pickle().AddStep( {
+  instruction: /^I should see "([^\"]*)"$/,
+  test: function (arg) {
+    return Pickle().Contains(arg);
+  }
+});
+
+
+Pickle().AddStep( {
+  instruction: /^I follow "([^\"]*)"$/,
+  test: function (arg) {
+    return Pickle().Click(arg);
+  }
+});
+
+Pickle().AddStep(  {
+  instruction: /^I fill in "([^\"]*)" with "([^\"]*)"$/,
+  test: function (arg, arg2) {
+    return Pickle().SetText(arg, arg2)
+    
+  }
+  
+});
+
+Pickle().AddStep( {
+  instruction: /^I press "([^\"]*)"$/,
+  test: function (arg) {
+    return Pickle().PressButton(arg);
+  }
+});
+
+Pickle().AddStep(  {
+  instruction: /^I select "([^\"]*)" from "([^\"]*)"$/,
+  test: function (arg, arg2) {
+    return Pickle().Select(arg, arg2);
+  }
+});
+
+Pickle().AddStep(  {
+  instruction: /^I check "([^\"]*)"$/,
+  test: function (arg) {
+    return Pickle().Check(arg);
+  }
+});
+
