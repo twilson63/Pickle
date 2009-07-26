@@ -10,14 +10,13 @@ var MyFeature = {
   }
 }
 
-var HaveAMillion = {
+Pickle().AddStep( {
   instruction: /^I have a million dollars$/,
   test: function () {
     return true;
   }
-}
+});
 
-Steps[Steps.length] = HaveAMillion;
 
 var ManageMedicationsFeature = {
   Description: "As a Provider I want to be able to list medications",
