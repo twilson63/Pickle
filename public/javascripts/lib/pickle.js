@@ -1,5 +1,5 @@
 /*!
- * Pickle JavaScript Library v0.0.3
+ * Pickle JavaScript Library v0.0.5
  * http://pickle.jackhq.com/
  *
  * Copyright (c) 2009 Jack Russell Software Company, LLC
@@ -63,11 +63,11 @@
     },
     SetText: function(name,value) {
       label = this.get_label(name);
-      selector = 'input:[id=?]';
+      selector = '#?';
       if(label.length > 0) {
-        textbox = $(selector.replace(/\?/, label.attr('for')));
-        if(textbox.length > 0) {
-          textbox.val(value);
+        text = $(selector.replace(/\?/, label.attr('for')));
+        if(text.length > 0) {
+          text.val(value);
           return true;
         } else {
           return false;
