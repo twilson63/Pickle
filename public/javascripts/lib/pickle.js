@@ -1,5 +1,5 @@
 /*!
- * Pickle JavaScript Library v0.0.5
+ * Pickle JavaScript Library v0.0.6
  * http://pickle.jackhq.com/
  *
  * Copyright (c) 2009 Jack Russell Software Company, LLC
@@ -21,7 +21,7 @@
       return Pickle.fn.init();
     },
     Given = window.Given = When = window.When = Then = window.Then = And = window.And = function(instruction) {
-      Pickle.fn.step(instruction);
+      Pickle.fn.run_step(instruction);
       //return true;
     }
 
@@ -29,13 +29,13 @@
     init: function() {
       return Pickle.fn;
     },
-    AddStep: function (obj) {
+    Step: function (obj) {
       Steps[Steps.length] = obj;
     },
-    AddFeature: function (obj) {
+    Feature: function (obj) {
       Features[Features.length] = obj;
     },
-    RunScenario: function(feature, scenario) {
+    Run: function(feature, scenario) {
       $.each(Features, function() {
         if(this.name == feature) {
           this[scenario]();
@@ -65,6 +65,7 @@
       label = this.get_label(name);
       selector = '#?';
       if(label.length > 0) {
+        
         text = $(selector.replace(/\?/, label.attr('for')));
         if(text.length > 0) {
           text.val(value);
@@ -150,7 +151,7 @@
       selector = 'label:contains("?")';
       return $(selector.replace(/\?/,name));
     },
-    step: function(instruction) {
+    run_step: function(instruction) {
       var fired = false;
       var test = function () {
         console.log("Test Not Defined: " + instruction);
@@ -189,7 +190,7 @@
 
 // Common Pickle Step Definitions
 
-Pickle().AddStep( {
+Pickle().Step( {
   instruction: /^I should see "([^\"]*)"$/,
   test: function (arg) {
     return Pickle().Contains(arg);
@@ -197,14 +198,14 @@ Pickle().AddStep( {
 });
 
 
-Pickle().AddStep( {
+Pickle().Step( {
   instruction: /^I follow "([^\"]*)"$/,
   test: function (arg) {
     return Pickle().Click(arg);
   }
 });
 
-Pickle().AddStep(  {
+Pickle().Step(  {
   instruction: /^I fill in "([^\"]*)" with "([^\"]*)"$/,
   test: function (arg, arg2) {
     return Pickle().SetText(arg, arg2)
@@ -213,28 +214,28 @@ Pickle().AddStep(  {
   
 });
 
-Pickle().AddStep( {
+Pickle().Step( {
   instruction: /^I press "([^\"]*)"$/,
   test: function (arg) {
     return Pickle().PressButton(arg);
   }
 });
 
-Pickle().AddStep(  {
+Pickle().Step(  {
   instruction: /^I select "([^\"]*)" from "([^\"]*)"$/,
   test: function (arg, arg2) {
     return Pickle().Select(arg, arg2);
   }
 });
 
-Pickle().AddStep(  {
+Pickle().Step(  {
   instruction: /^I check "([^\"]*)"$/,
   test: function (arg) {
     return Pickle().Check(arg);
   }
 });
 
-Pickle().AddStep(  {
+Pickle().Step(  {
   instruction: /^I choose "([^\"]*)"$/,
   test: function (arg) {
     return Pickle().Choose(arg);
