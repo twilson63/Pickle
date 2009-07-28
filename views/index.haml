@@ -1,29 +1,9 @@
 %html
   %head
-    %script{:type => "text/javascript", :src => "javascripts/jquery-1.3.2.js"}
-    %script{:type => "text/javascript", :src => "javascripts/pickle.js"}
-    %script{:type => "text/javascript", :src => "javascripts/features.js"}
-    %script{:type => "text/javascript", :src => "javascripts/application.js"}
-  %body
-    %h1 BDD JavaScript with Pickle
-
-    %p
-      Pickle is a JavaScript Library that uses JQuery to enable Behavior Driven Development in JavaScript.  It comes built with basic steps already defined, but you can create your own step definitions and easy add them to the library.  Then you can create your Feature Scenarios using simple JavaScript Objects.
-      
-  %textarea{:style => "width:900px;height:150px;", :id => "pickle_text"}
-    = "\n\nGiven('I fill in \"Name\" with \"Pickle\"'); \nWhen('I press \"Submit\"');\nThen('I should see \"Welcome to Pickle\"');"; 
-  
-  %input{:type => "submit", :id => "pickle_button", :value => "Run Pickle"}
-  
-  %hr
-  
-  %p
-    %label{:for => "name_text"} Name
-    %br
-    %input{:type => "text", :id => "name_text"}
-    %br
-  %p
-    %input{:type => "submit", :value => "Submit"}
+    %script{:type => "text/javascript", :src => "javascripts/lib/jquery-1.3.2.js"}
+    %script{:type => "text/javascript", :src => "javascripts/lib/jtag.js"}
+    %script{:type => "text/javascript", :src => "javascripts/lib/pickle.js"}
+    %script{:type => "text/javascript", :src => "javascripts/features/my_test_feature.js"}
+    %script{:type => "text/javascript", :src => "javascripts/tests/feature_test.js"}
     
-  
-      
+  %body

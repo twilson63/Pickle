@@ -15,6 +15,7 @@
     window = this,
     undefined,
     Steps = window.Steps = [],
+    Features = window.Features = [],
     _Pickle = window.Pickle,
     Pickle = window.Pickle = function() {
       return Pickle.fn.init();
@@ -30,6 +31,17 @@
     },
     AddStep: function (obj) {
       Steps[Steps.length] = obj;
+    },
+    AddFeature: function (obj) {
+      Features[Features.length] = obj;
+    },
+    RunScenario: function(feature, scenario) {
+      $.each(Features, function() {
+        if(this.name == feature) {
+          this[scenario]();
+          return;
+        }
+      });
     },
     Contains: function(value) {
       rx = new RegExp(value);
@@ -90,13 +102,49 @@
       }
     },
     Check: function(name) {
-      return false;
+      label = this.get_label(name);
+      selector = 'input';
+      if(label.length > 0) {
+       checkbox = $('input:[id=' + label.attr('for') + ']') || label.children(selector);
+       if(checkbox.length > 0) {
+         checkbox.attr('checked', true);
+         return true;
+       } else {
+         return false;
+       }
+      } else {
+        return false;
+      }
     },
     UnCheck: function(name) {
-      return false;
+      label = this.get_label(name);
+      selector = 'input';
+      if(label.length > 0) {
+       checkbox = $('input:[id=' + label.attr('for') + ']') || label.children(selector);
+       if(checkbox.length > 0) {
+         checkbox.attr('checked', false);
+         return true;
+       } else {
+         return false;
+       }
+      } else {
+        return false;
+      }
     },
     Choose: function(name) {
-      return false;
+      label = this.get_label(name);
+      selector = 'input';
+      if(label.length > 0) {
+       radio = $('input:[id=' + label.attr('for') + ']') || label.children(selector);
+       if(radio.length > 0) {
+         radio.attr('checked', true);
+         return true;
+       } else {
+         return false;
+       }
+      } else {
+        return false;
+      }
     },
     get_label: function(name) {
       selector = 'label:contains("?")';
@@ -183,6 +231,13 @@ Pickle().AddStep(  {
   instruction: /^I check "([^\"]*)"$/,
   test: function (arg) {
     return Pickle().Check(arg);
+  }
+});
+
+Pickle().AddStep(  {
+  instruction: /^I choose "([^\"]*)"$/,
+  test: function (arg) {
+    return Pickle().Choose(arg);
   }
 });
 
