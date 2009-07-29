@@ -2,7 +2,7 @@ var FeatureTest = {
   run_sample: function () {
     try {
       $('body').html();
-      Pickle().RunScenario('MyTest','Sample');
+      Pickle().Run('MyTest','Sample');
       console.log("Test Valid");
     } catch(err) {
       console.log("Test Failed: " + err);
@@ -11,7 +11,7 @@ var FeatureTest = {
   run_sample2: function () {
     try {
       $('body').html();
-      Pickle().RunScenario('MyTest','Sample2');
+      Pickle().Run('MyTest','Sample2');
       console.log("Test Valid");
     } catch(err) {
       console.log("Test Failed: " + err);
@@ -19,6 +19,11 @@ var FeatureTest = {
   },
   test_fill_in_step: function () {
     
+  },
+  run_all: function () {
+    Pickle().RunAll();
+    
   }
+  
   
 }

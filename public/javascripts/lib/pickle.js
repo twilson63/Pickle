@@ -43,6 +43,17 @@
         }
       });
     },
+    RunAll: function() {
+      $.each(Features, function() {
+        console.log("Feature:" + this.name);
+        for(var method in this) {
+          if(method != "name" && method != "Background" && method != "Load") {
+            console.log("  Scenario: " + method);
+            this[method]();
+          }
+        }
+      });      
+    },
     Contains: function(value) {
       if(typeof(value) != "string") {
         throw "Requires String as value";
