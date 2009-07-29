@@ -1,5 +1,5 @@
 /*!
- * Pickle JavaScript Library v0.0.6
+ * Pickle JavaScript Library v0.0.7
  * http://pickle.jackhq.com/
  *
  * Copyright (c) 2009 Jack Russell Software Company, LLC
@@ -44,7 +44,7 @@
       });
     },
     Contains: function(value) {
-      rx = new RegExp(value);
+      var rx = new RegExp(value);
       if($("body").html().match(rx) == null) {
         return false;
       } else {
@@ -52,8 +52,8 @@
       }
     },
     Click: function(linkname) {
-      selector = 'a:contains("?")';
-      link = $(selector.replace(/\?/, linkname));
+      var selector = 'a:contains("?")';
+      var link = $(selector.replace(/\?/, linkname));
       if(link.length == 0 ) {
         return false;
       } else {
@@ -62,11 +62,11 @@
       }
     },
     SetText: function(name,value) {
-      label = this.get_label(name);
-      selector = '#?';
+      var label = this.get_label(name);
+      var selector = '#?';
       if(label.length > 0) {
         
-        text = $(selector.replace(/\?/, label.attr('for')));
+        var text = $(selector.replace(/\?/, label.attr('for')));
         if(text.length > 0) {
           text.val(value);
           return true;
@@ -78,8 +78,8 @@
       }
     },
     PressButton: function(name) {
-      selector = 'input:[value="?"]';
-      submit = $(selector.replace(/\?/, name));
+      var selector = 'input:[value="?"]';
+      var submit = $(selector.replace(/\?/, name));
       if(submit.length > 0) {
         submit.click();
         return true;
@@ -88,10 +88,10 @@
       }
     },
     Select: function(value, name) {
-      label = get_label(name);
-      selector = 'select:[id=?] option:contains("2")';
+      var label = this.get_label(name);
+      var selector = 'select:[id=?] option:contains("2")';
       if(label.length > 0) {
-        option = $(selector.replace(/\?/,label.attr('for')).replace(/2/, value));
+        var option = $(selector.replace(/\?/,label.attr('for')).replace(/2/, value));
         if(option.length > 0) {
           option[0].selected = true;
           return true;
@@ -103,10 +103,10 @@
       }
     },
     Check: function(name) {
-      label = this.get_label(name);
-      selector = 'input';
+      var label = this.get_label(name);
+      var selector = 'input';
       if(label.length > 0) {
-       checkbox = $('input:[id=' + label.attr('for') + ']') || label.children(selector);
+       var checkbox = $('input:[id=' + label.attr('for') + ']') || label.children(selector);
        if(checkbox.length > 0) {
          checkbox.attr('checked', true);
          return true;
@@ -118,8 +118,8 @@
       }
     },
     UnCheck: function(name) {
-      label = this.get_label(name);
-      selector = 'input';
+      var label = this.get_label(name);
+      var selector = 'input';
       if(label.length > 0) {
        checkbox = $('input:[id=' + label.attr('for') + ']') || label.children(selector);
        if(checkbox.length > 0) {
@@ -133,8 +133,8 @@
       }
     },
     Choose: function(name) {
-      label = this.get_label(name);
-      selector = 'input';
+      var label = this.get_label(name);
+      var selector = 'input';
       if(label.length > 0) {
        radio = $('input:[id=' + label.attr('for') + ']') || label.children(selector);
        if(radio.length > 0) {
@@ -148,7 +148,7 @@
       }
     },
     get_label: function(name) {
-      selector = 'label:contains("?")';
+      var selector = 'label:contains("?")';
       return $(selector.replace(/\?/,name));
     },
     run_step: function(instruction) {
@@ -158,7 +158,7 @@
       }
       /* Find Test by Instruction */
       for(i = 0; i < Steps.length; i++) {
-        a = instruction.match(Steps[i].instruction);
+        var a = instruction.match(Steps[i].instruction);
         if (a != null) {
           fired = true;
           if (a.length == 1) {

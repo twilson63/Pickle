@@ -1,4 +1,4 @@
-Pickle().AddFeature({
+Pickle().Feature({
   name: "MyTest",
   Sample: function () {
     Given('I have a link hello');
@@ -12,14 +12,14 @@ Pickle().AddFeature({
   }
 });
 
-Pickle().AddStep({
+Pickle().Step({
   instruction: /^I have a link hello$/,
   test: function (){
     $('body').append(jLink("my_link", "Hello", "#"));
   }
 });
 
-Pickle().AddStep({
+Pickle().Step({
   instruction: /^I have a radio button hello$/,
   test: function (){
     $('body').append(
@@ -29,7 +29,7 @@ Pickle().AddStep({
   }
 });
 
-Pickle().AddStep({
+Pickle().Step({
   instruction: /^I have a radio button world$/,
   test: function (){
     $('body').append(
@@ -39,7 +39,7 @@ Pickle().AddStep({
   }
 });
 
-Pickle().AddStep({
+Pickle().Step({
   instruction: /^world should be choosen$/,
   test: function (){
     return $('input:radio[id=my_world_2]').attr('checked');
