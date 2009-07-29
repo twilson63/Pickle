@@ -1,5 +1,5 @@
 /*!
- * Pickle JavaScript Library v0.0.7
+ * Pickle JavaScript Library v0.0.8
  * http://pickle.jackhq.com/
  *
  * Copyright (c) 2009 Jack Russell Software Company, LLC
@@ -51,6 +51,7 @@
             console.log("  Scenario: " + method);
             this[method]();
           }
+          
         }
       });      
     },
@@ -162,7 +163,7 @@
       }
     },
     get_label: function(name) {
-      var selector = 'label:contains("?")';
+      var selector = 'label:visible:contains("?")';
       return $(selector.replace(/\?/,name));
     },
     run_step: function(instruction) {
