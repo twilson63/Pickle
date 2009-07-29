@@ -44,7 +44,10 @@
       });
     },
     Contains: function(value) {
-      var rx = new RegExp(value);
+      if(typeof(value) != "string") {
+        throw "Requires String as value";
+      }
+      var rx = new RegExp(RegExp.escape(value));
       if($("body").html().match(rx) == null) {
         return false;
       } else {
