@@ -1,5 +1,5 @@
 /*!
- * Pickle JavaScript Library v0.0.8
+ * Pickle JavaScript Library v0.1.0
  * http://pickle.jackhq.com/
  *
  * Copyright (c) 2009 Jack Russell Software Company, LLC
@@ -21,7 +21,9 @@
       return Pickle.fn.init();
     },
     Given = window.Given = When = window.When = Then = window.Then = And = window.And = function(instruction) {
-      Pickle.fn.run_step(instruction);
+      if(!Pickle.fn.run_step(instruction)) {
+        throw "Error";
+      }
       //return true;
     }
 
@@ -38,7 +40,11 @@
     Run: function(feature, scenario) {
       $.each(Features, function() {
         if(this.name == feature) {
-          this[scenario]();
+          try {
+            this[scenario]();
+          } catch (err) {
+            console.error(feature, "Step Execution Failed");
+          }
           return;
         }
       });
@@ -55,20 +61,20 @@
         }
       });      
     },
-    Contains: function(value) {
-      if(typeof(value) != "string") {
+    Contains: function(args) {
+      if(typeof(args[0]) != "string") {
         throw "Requires String as value";
       }
-      var rx = new RegExp(RegExp.escape(value));
+      var rx = new RegExp(RegExp.escape(args[0]));
       if($("body").html().match(rx) == null) {
         return false;
       } else {
         return true;
       }
     },
-    Click: function(linkname) {
+    Click: function(args) {
       var selector = 'a:contains("?")';
-      var link = $(selector.replace(/\?/, linkname));
+      var link = $(selector.replace(/\?/, args[0]));
       if(link.length == 0 ) {
         return false;
       } else {
@@ -76,14 +82,14 @@
         return true;
       }
     },
-    SetText: function(name,value) {
-      var label = this.get_label(name);
+    SetText: function(args) {
+      var label = this.get_label(args[0]);
       var selector = '#?';
       if(label.length > 0) {
         
         var text = $(selector.replace(/\?/, label.attr('for')));
         if(text.length > 0) {
-          text.val(value);
+          text.val(args[1]);
           return true;
         } else {
           return false;
@@ -92,9 +98,9 @@
         return false;
       }
     },
-    PressButton: function(name) {
+    PressButton: function(args) {
       var selector = 'input:[value="?"]';
-      var submit = $(selector.replace(/\?/, name));
+      var submit = $(selector.replace(/\?/, args[0]));
       if(submit.length > 0) {
         submit.click();
         return true;
@@ -102,11 +108,11 @@
         return false;
       }
     },
-    Select: function(value, name) {
-      var label = this.get_label(name);
+    Select: function(args) {
+      var label = this.get_label(args[1]);
       var selector = 'select:[id=?] option:contains("2")';
       if(label.length > 0) {
-        var option = $(selector.replace(/\?/,label.attr('for')).replace(/2/, value));
+        var option = $(selector.replace(/\?/,label.attr('for')).replace(/2/, args[0]));
         if(option.length > 0) {
           option[0].selected = true;
           return true;
@@ -117,8 +123,8 @@
         return false;
       }
     },
-    Check: function(name) {
-      var label = this.get_label(name);
+    Check: function(args) {
+      var label = this.get_label(args[0]);
       var selector = 'input';
       if(label.length > 0) {
        var checkbox = $('input:[id=' + label.attr('for') + ']') || label.children(selector);
@@ -132,8 +138,8 @@
         return false;
       }
     },
-    UnCheck: function(name) {
-      var label = this.get_label(name);
+    UnCheck: function(args) {
+      var label = this.get_label(arg[0]);
       var selector = 'input';
       if(label.length > 0) {
        checkbox = $('input:[id=' + label.attr('for') + ']') || label.children(selector);
@@ -147,8 +153,8 @@
         return false;
       }
     },
-    Choose: function(name) {
-      var label = this.get_label(name);
+    Choose: function(args) {
+      var label = this.get_label(args[0]);
       var selector = 'input';
       if(label.length > 0) {
        radio = $('input:[id=' + label.attr('for') + ']') || label.children(selector);
@@ -168,14 +174,22 @@
     },
     run_step: function(instruction) {
       var fired = false;
-      var test = function () {
-        console.log("Test Not Defined: " + instruction);
-      }
       /* Find Test by Instruction */
       for(i = 0; i < Steps.length; i++) {
-        var a = instruction.match(Steps[i].instruction);
-        if (a != null) {
+        var args = instruction.match(Steps[i].instruction);
+        if (args != null) {
           fired = true;
+          args.splice(0,1);
+          if(Steps[i].test(args)) {
+            console.info("Step Passed: ", instruction);
+            return true;
+          } else {
+            console.error("Step Failed: ", instruction);
+            //throw "Step Failed:" + instruction;
+            return false;
+          }
+          
+          /*
           if (a.length == 1) {
             if( Steps[i].test() == false) {
               console.log("Step Failed: " + instruction);
@@ -195,9 +209,14 @@
                 console.log("Step Passed: " + instruction);
               }
           }
+          */
         }
       }
+      if(!fired) {
+        console.log("Step UnDefined: " + instruction);
+      }  
     }
+    
 
   }
 

@@ -16,6 +16,7 @@ Pickle().Step({
   instruction: /^I have a link hello$/,
   test: function (){
     $('body').append(jLink("my_link", "Hello", "#"));
+    return false;
   }
 });
 
