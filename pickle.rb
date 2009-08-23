@@ -8,6 +8,7 @@ get "/" do
 end
 
 
+
 def build_scripts
   scripts = []
   Dir.glob('public/javascripts/tests/**/*.js').each do |js|

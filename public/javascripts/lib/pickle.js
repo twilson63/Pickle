@@ -55,7 +55,12 @@
         for(var method in this) {
           if(method != "name" && method != "Background" && method != "Load") {
             console.log("  Scenario: " + method);
-            this[method]();
+            try {
+              this[method]();
+            } catch (err) {
+              console.error(this.name, "Step Execution Failed");
+            }
+            break;
           }
           
         }
@@ -189,27 +194,6 @@
             return false;
           }
           
-          /*
-          if (a.length == 1) {
-            if( Steps[i].test() == false) {
-              console.log("Step Failed: " + instruction);
-            } else {
-              console.log("Step Passed: " + instruction);
-            }
-          } else if (a.length == 2) {
-            if(Steps[i].test(a[1]) == false) {
-              console.log("Step Failed: " + instruction);
-            } else {
-              console.log("Step Passed: " + instruction);
-            }
-          } else if (a.length == 3) {
-              if(Steps[i].test(a[1],a[2]) == false) {
-                console.log("Step Failed: " + instruction);
-              } else {
-                console.log("Step Passed: " + instruction);
-              }
-          }
-          */
         }
       }
       if(!fired) {
