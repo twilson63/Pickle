@@ -102,19 +102,21 @@ Pickle('step', /^I select "([^\"]*)" from "([^\"]*)"$/, function () {
 });
 
 Pickle('step', /^I check "([^\"]*)"$/, function () {
-  var label = this.get_label(arguments[0]);
-  var selector = 'input';
+  var selector = 'input:checkbox';
+  var checkbox = null;
+  
+  var label = $("label:contains(?)".replace(/\?/, arguments[0][0]));
   if(label.length > 0) {
-   var checkbox = $('input:[id=' + label.attr('for') + ']') || label.children(selector);
-   if(checkbox.length > 0) {
-     checkbox.attr('checked', true);
-     return true;
-   } else {
-     return false;
-   }
+    checkbox = $('input:[id=' + label.attr('for') + ']') || label.children(selector);
+  } else {
+    checkbox = $('input:checkbox#?'.replace(/\?/, arguments[0][0]));
+  }
+  if(checkbox.length > 0) {
+    checkbox.attr('checked', true);
+    return true;
   } else {
     return false;
-  }  
+  }
 });
 
 Pickle('step', /^I uncheck "([^\"]*)"$/, function () {
