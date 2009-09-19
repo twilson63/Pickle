@@ -30,9 +30,21 @@ Pickle('feature', 'basic_steps', function() {
     And('I have a check list form');
     When('I check "Item1"');
     And('I check "Item2"');
+    And('I check "Item3"');
+    And('I uncheck "Item3"')
     And('I press "Submit"');
     Then('I should see "You checked Item1, Item2"');
   });
+  
+  Scenario('Option List', function() {
+    Given('I have an empty page');
+    And('I have a radio list form');
+    When('I choose "Option1"');
+    And('I press "Submit"');
+    Then('I should see "You choose Option1"');
+    
+  });
+  
 });
 
 

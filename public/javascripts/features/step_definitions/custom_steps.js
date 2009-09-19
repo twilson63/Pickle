@@ -1,3 +1,33 @@
+Pickle('step', /^I have a radio list form$/, function(){
+  $('body').append(
+    jTag('form',
+      jLabel("option_1", jRadio("option", "1") + "Option1") + _br +
+      jLabel("option_2", jRadio("option", "2") + "Option2") + _br +
+      jLabel("option_3", jRadio("option", "2") + "Option3") + _br +
+
+      jSubmit('Submit'),
+      [jAt('name','radio_list'),
+      jAt('id', 'radio_list'),
+      jAt('method','get'),
+      jAt('action', '#')]
+  ));
+  
+  $('#radio_list').live('submit', function() {
+    //var checked_items = null;
+    var selected_items = [];
+    $('input:radio:checked').each(function(i){
+     selected_items[selected_items.length] = this.value;
+    });
+    
+    $('body').append(
+      jTag('p', 'You choose Option?'.replace(/\?/, selected_items.join(', '))
+    ));
+    return false;
+  });
+  return true;
+  
+});
+
 Pickle('step', /^I have a check list form$/, function(){
   $('body').append(
     jTag('form',
