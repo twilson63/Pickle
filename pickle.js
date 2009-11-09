@@ -102,7 +102,17 @@
         if (args != null) {
           fired = true;
           args.splice(0,1);
-          if(this.steps[i].test(args)) {
+          // 
+          // if(this.steps[i].test(args) ) {
+          //   this.results[this.results.length] = ["Step Passed:", arguments[0]].join(' ');
+          //   return true;
+          // } else {
+          //   this.results[this.results.length] = ["Step Failed:", arguments[0]].join(' ');
+          //   //console.error("Step Failed: ", instruction);
+          //   //throw "Step Failed:" + instruction;
+          //   return false;
+          // } 
+          if(eval("this.steps[i].test('" + args.join("','") + "')")) {
             this.results[this.results.length] = ["Step Passed:", arguments[0]].join(' ');
             return true;
           } else {
@@ -110,7 +120,8 @@
             //console.error("Step Failed: ", instruction);
             //throw "Step Failed:" + instruction;
             return false;
-          } 
+            
+          }
         }
       }
       if(!fired) {
