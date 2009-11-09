@@ -50,7 +50,7 @@ Pickle('step', /^I press "([^\"]*)"$/, function () {
 
 Pickle('step', /^I follow "([^\"]*)"$/, function () {
   var argument_value = arguments[0][0];
-  var link = $('a:contains("?")'.replace(/\?/, argument_value));
+  var link = $('a:contains("?"):visible'.replace(/\?/, argument_value));
   if(link.length == 0 ) {
     return false;
   } else {
@@ -64,7 +64,7 @@ Pickle('step', /^I fill in "([^\"]*)" with "([^\"]*)"$/, function () {
   var text = null;
   
   // try to find input by label
-  var label = $("label:contains(?)".replace(/\?/, arguments[0][0]));
+  var label = $("label:contains(?):visible".replace(/\?/, arguments[0][0]));
   if(label.length > 0) {
     text = $('#?'.replace(/\?/, label.attr('for')));
   } else {
