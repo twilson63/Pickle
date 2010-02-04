@@ -1,28 +1,48 @@
-# Pickle 0.0.1
+# Pickle 0.0.6
 
 A BDD Javascript Library that allows you create behavior style features that execute step definitions to develop and test your javascript in a BDD Style.
 
-    var MyFeature = {
-      MyScenario: function () {
-        Given("I should see Hello");
-        And("I should see BiteMe");
-        When("I fill in Name with Tom");
-        Then("I press Save");
-        And("I should see Everything");
-        And("I have a million dollars");
+## Features
 
-      }
-    }
+    Pickle('feature', 'basic_steps', function() {
+      Scenario('should_see', function() {
+        Given('I have an empty page');
+        And('I have a link called say hello')
+        When('I follow "Say Hello"');
+        Then('I should see "Hello World"'); 
 
-    var HaveAMillion = {
-      instruction: /^I have a million dollars$/,
-      test: function () {
+
+      });
+
+      Scenario('Hello Form', function() {
+        Given('I have an empty page');
+        And('I have a simple form');
+        When('I fill in "Name" with "Joe"');
+        And('I press "Submit"');
+        Then('I should see "Hello Joe!"');
+      });
+    });
+    
+## Steps
+
+    Pickle('step', /^I should see "([^\"]*)"$/, function (a) {
+      var rx = new RegExp(RegExp().escape(a));
+      if($("body").html().match(rx) == null) {
+        return false;
+      } else {
         return true;
       }
-    }
+    });
 
-    Steps[Steps.length] = HaveAMillion;
-    
+    Pickle('step', /^I press "([^\"]*)"$/, function (a) {
+      var submit = $('input:submit:[value="?"]'.replace(/\?/, a));
+      if(submit.length > 0) {
+        submit[0].click();
+        return true;
+      } else {
+        return false;
+      }  
+    });
 
 ## Requirements
 
@@ -40,7 +60,19 @@ JQuery 1.3.2
     
     # Open Firebug and Run 
     Pickle('run');
+    
+    or
+    
+    // Just run a particular feature
+    Pickle('NameOfFeature');
+    
+    // Just run a particular step
+    Pickle('NameOfFeature','NameOfStep');
+    
     # In the console
     
-    
+
+## Support
+
+[http://support.jackrussellsoftware.com](http://support.jackrussellsoftware.com)
     

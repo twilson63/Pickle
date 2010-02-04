@@ -1,5 +1,5 @@
 /*
-* Pickle JavaScript Library v0.5.0
+* Pickle JavaScript Library v0.0.6
 * http://pickle.jackhq.com
 *
 * Copyright (c) 2009 Jack Russell Software Company, LLC
